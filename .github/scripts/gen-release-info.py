@@ -7,7 +7,6 @@ import subprocess
 
 REPO = 'Aasdqwe1/agent-toolbox'
 PAGES_BASE = 'https://aasdqwe1.github.io/agent-toolbox-site'
-CDN_BASE = 'https://cdn.jsdelivr.net/gh/Aasdqwe1/agent-toolbox-site@main'
 INPUT = '/tmp/releases.json'
 OUTPUT = 'assets/release-info.json'
 APK_DIR = 'apk'
@@ -53,7 +52,6 @@ def asset_info(release, apk_name):
         'published_at': release['published_at'],
         'download_url': a['browser_download_url'],
         'pages_url': f'{PAGES_BASE}/apk/{apk_name}',
-        'cdn_url': f'{CDN_BASE}/apk/{apk_name}',
     }
 
 
