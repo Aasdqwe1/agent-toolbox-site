@@ -252,6 +252,42 @@ code {
 .footer-links a:hover { color: var(--blue); }
 .footer-copy { color: var(--text-faint); font-size: 0.82rem; margin-top: 22px; }
 
+/* ===== 下载 ===== */
+.download-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  box-shadow: var(--shadow-sm);
+}
+.dl-main { display: flex; align-items: center; gap: 18px; }
+.dl-badge {
+  flex: 0 0 auto;
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  background: var(--grad);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.02rem;
+  letter-spacing: 0.5px;
+  display: flex; align-items: center; justify-content: center;
+}
+.dl-info h3 { font-size: 1.15rem; color: var(--text); }
+.dl-meta { color: var(--text-dim); font-size: 0.92rem; margin-top: 4px; }
+.dl-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.dl-note { text-align: center; color: var(--text-faint); font-size: 0.86rem; margin-top: 22px; }
+@media (max-width: 560px) {
+  .download-card { flex-direction: column; align-items: stretch; text-align: center; }
+  .dl-main { justify-content: center; }
+  .dl-actions { justify-content: center; }
+  .dl-actions .btn { flex: 1 1 auto; }
+}
+
 /* ===== 404 ===== */
 .nf { min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 18px; }
 .nf h1 { font-size: 4rem; background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
