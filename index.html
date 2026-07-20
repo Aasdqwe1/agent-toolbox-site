@@ -31,7 +31,7 @@
   <section class="hero" id="top">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-inner">
-      <div class="badge">Android MCP Server · v2.4.9</div>
+      <div class="badge" id="hero-badge">Android MCP Server · v2.4.36</div>
       <h1 class="hero-title">把一台 <span class="grad">MCP 服务端</span><br />装进你的安卓手机</h1>
       <p class="hero-sub">
         基于 JSON-RPC 2.0 协议的安卓端 MCP 服务端，内嵌 Python 3.14、Lua 引擎、内存修改引擎与静态 Git 二进制。
@@ -249,20 +249,20 @@
   <section class="section section-alt" id="download">
     <div class="section-head">
       <h2 class="section-title">下载</h2>
-      <p class="section-desc">获取最新 CI 构建版本，每次推送 main 自动更新</p>
+      <p class="section-desc">自动同步 GitHub Releases，支持最新 CI 构建与最新正式版</p>
     </div>
-    <div class="download-card">
+    <div class="download-card" id="download-card">
       <div class="dl-main">
         <div class="dl-badge">APK</div>
         <div class="dl-info">
-          <h3 id="dl-title">最新构建版</h3>
+          <h3 id="dl-title">最新 CI 构建</h3>
           <p id="dl-meta" class="dl-meta">正在获取构建信息…</p>
         </div>
       </div>
       <div class="dl-actions">
-        <a id="dl-btn" class="btn btn-primary" href="https://github.com/Aasdqwe1/agent-toolbox/releases" rel="noopener">下载 APK</a>
+        <a id="dl-btn" class="btn btn-primary" href="https://github.com/Aasdqwe1/agent-toolbox/releases" rel="noopener">下载最新构建</a>
+        <a id="dl-stable-btn" class="btn btn-ghost" href="https://github.com/Aasdqwe1/agent-toolbox/releases" target="_blank" rel="noopener">下载正式版</a>
         <a class="btn btn-ghost" href="https://github.com/Aasdqwe1/agent-toolbox/releases" target="_blank" rel="noopener">全部版本</a>
-        <a class="btn btn-ghost" href="https://github.com/Aasdqwe1/agent-toolbox/actions" target="_blank" rel="noopener">CI 构建记录</a>
       </div>
     </div>
     <p class="dl-note">要求：Android 7.0+（API 24），arm64-v8a 架构。安装前请在系统设置中允许「未知来源」应用安装。</p>
@@ -272,10 +272,10 @@
   <section class="section" id="changelog">
     <div class="section-head">
       <h2 class="section-title">版本信息 &amp; 更新日志</h2>
-      <p class="section-desc">当前版本 v2.4.9</p>
+      <p class="section-desc" id="changelog-desc">当前版本 v2.4.36</p>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><span>版本</span><strong>2.4.9</strong></div>
+      <div class="meta-item"><span>版本</span><strong id="version-value">v2.4.36</strong></div>
       <div class="meta-item"><span>Python</span><strong>3.14.6（官方 Android aarch64）</strong></div>
       <div class="meta-item"><span>Git</span><strong>2.46.0（静态编译，含 HTTPS）</strong></div>
       <div class="meta-item"><span>协议</span><strong>MCP · JSON-RPC 2.0 over HTTP</strong></div>

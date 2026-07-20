@@ -14,20 +14,22 @@
 |------|------|
 | `index.html` | 主页面（单页，含锚点导航） |
 | `assets/css/style.css` | 冷色调主题样式 |
-| `assets/js/main.js` | 导航滚动样式 + 进入视口淡入动画 + 实时拉取最新 CI 构建 |
+| `assets/js/main.js` | 导航滚动样式 + 进入视口淡入动画 + 读取本地构建信息 |
 | `assets/favicon.png` | 站点图标（圆角渐变方块） |
+| `assets/release-info.json` | 由 GitHub Actions 自动同步的最新构建元数据 |
+| `404.html` | 自定义 404 页面 |
 
-## 下载（实时最新 CI 构建）
+## 下载（自动同步最新构建）
 
-下载按钮由前端 JS 调用 GitHub API（`/repos/Aasdqwe1/agent-toolbox/releases`）实时获取：
+下载按钮不直接调用 `api.github.com`（浏览器端容易被限流），而是读取同域的 `assets/release-info.json`：
 
-- 优先取 `latest` 预发布（推送 `main` 触发的滚动 CI 构建，APK 名含 commit sha）；
-- 若 `latest` 不存在，则回退到最新正式版 Release；
-- 按钮 `href` 自动指向最新 APK 的 `browser_download_url`，并显示大小与发布时间；
-- API 受限/失败时回退到 Releases 页面，不影响页面可用性。
+- `.github/workflows/update-release-info.yml` 每小时调用 GitHub API 拉取 `Aasdqwe1/agent-toolbox` 的 releases；
+- 同时记录 **最新 CI 构建**（`latest` 滚动预发布）和 **最新正式版**（非 prerelease）；
+- 自动生成 `assets/release-info.json` 并提交，GitHub Pages 重新部署；
+- 页面 JS 从同域 JSON 读取后直接设置下载链接与版本信息，稳定可靠；
+- 同步失败或文件缺失时回退到 Releases 页面，不影响可用性。
 
 要求：Android 7.0+（API 24），arm64-v8a 架构。
-| `404.html` | 自定义 404 页面 |
 
 ## 本地预览
 

@@ -1,0 +1,20 @@
+{
+  "updated_at": "2026-07-20T08:46:10Z",
+  "ci": {
+    "tag": "latest",
+    "asset_name": "agent-toolbox-latest-13143fc.apk",
+    "size": 38107958,
+    "size_mb": 36.3,
+    "published_at": "2026-07-19T19:21:34Z",
+    "download_url": "https://github.com/Aasdqwe1/agent-toolbox/releases/download/latest/agent-toolbox-latest-13143fc.apk",
+    "commit": "13143fc"
+  },
+  "stable": {
+    "tag": "v2.4.36",
+    "asset_name": "agent-toolbox-v2.4.36.apk",
+    "size": 38083948,
+    "size_mb": 36.3,
+    "published_at": "2026-07-17T19:17:25Z",
+    "download_url": "https://github.com/Aasdqwe1/agent-toolbox/releases/download/v2.4.36/agent-toolbox-v2.4.36.apk"
+  }
+}
