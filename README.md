@@ -47,17 +47,11 @@ python3 -m http.server 8080
 
 如需修改内容，直接编辑 `index.html` / `assets/` 后提交推送即可，GitHub Pages 会自动重新构建发布。
 
-## CDN 加速
+## CDN 说明
 
-GitHub Pages 本身已托管在 Fastly 全球 CDN 上。若部分地区访问 GitHub 较慢，可使用 **jsDelivr** 镜像（同样是全球 CDN，且本站使用相对路径，整站可直接通过它访问，无需任何改造）：
-
-> https://cdn.jsdelivr.net/gh/Aasdqwe1/agent-toolbox-site@main/
-
-- 整站资源（HTML / CSS / JS / PNG / JSON）均由 jsDelivr 边缘节点分发；
-- `assets/release-info.json` 由 Actions 每小时更新，镜像侧最多延迟一个缓存周期；
-- 亦可在页面页脚点击「jsDelivr 镜像」一键切换。
-
-如需完全自定义域名 + 自有 CDN（如 Cloudflare），在仓库 Settings → Pages 添加自定义域名，并将 DNS 指向 Cloudflare 即可。
+- 本站点由 **GitHub Pages 托管，已默认接入 Fastly 全球 CDN**，世界各地访问都有边缘缓存加速，无需额外配置。
+- **jsDelivr 不适合做整站镜像**：它对 `index.html` 等 HTML 文件会 301 重定向到 `raw.githubusercontent.com`，并不真正经 jsDelivr 边缘节点分发，因此无法用它来加速 HTML 首页。
+- 若需要更强的可控加速（自定义缓存策略、中国大陆优化、HTTP/3、压缩等），推荐方案是 **绑定自定义域名 + Cloudflare**（或部署到 Cloudflare Pages / Netlify）。这需要你拥有一个域名，并在仓库 Settings → Pages 中设置自定义域名、将 DNS 指向 Cloudflare。需要的话我可以提供具体步骤或直接帮你配好 CNAME 与 DNS 记录。
 
 ## 目录结构
 
