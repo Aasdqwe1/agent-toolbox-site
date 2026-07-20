@@ -4,8 +4,6 @@ on:
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
-  push:
-    branches: [main]
 
 permissions:
   contents: write
@@ -24,6 +22,8 @@ jobs:
             -o /tmp/releases.json
 
       - name: Generate release-info.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 .github/scripts/gen-release-info.py
 
       - name: Commit and push if changed
