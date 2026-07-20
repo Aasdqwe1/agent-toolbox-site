@@ -51,7 +51,19 @@ python3 -m http.server 8080
 
 - 本站点由 **GitHub Pages 托管，已默认接入 Fastly 全球 CDN**，世界各地访问都有边缘缓存加速，无需额外配置。
 - **jsDelivr 不适合做整站镜像**：它对 `index.html` 等 HTML 文件会 301 重定向到 `raw.githubusercontent.com`，并不真正经 jsDelivr 边缘节点分发，因此无法用它来加速 HTML 首页。
-- 若需要更强的可控加速（自定义缓存策略、中国大陆优化、HTTP/3、压缩等），推荐方案是 **绑定自定义域名 + Cloudflare**（或部署到 Cloudflare Pages / Netlify）。这需要你拥有一个域名，并在仓库 Settings → Pages 中设置自定义域名、将 DNS 指向 Cloudflare。需要的话我可以提供具体步骤或直接帮你配好 CNAME 与 DNS 记录。
+- 但若把**静态二进制（APK）**提交进仓库，jsDelivr 会真正经其边缘节点分发（HTML 才会被重定向）。详见下方「APK 下载加速」。
+- 若需要更强的可控加速（自定义缓存策略、中国大陆优化、HTTP/3、压缩等），推荐方案是 **绑定自定义域名 + Cloudflare**（或部署到 Cloudflare Pages / Netlify）。这需要你拥有一个域名，并在仓库 Settings → Pages 中设置自定义域名、将 DNS 指向 Cloudflare。
+
+## APK 下载加速
+
+GitHub Releases 的原生下载链路在部分地区偏慢，因此本站把最新 APK **镜像到本仓库并由 GitHub Pages（Fastly）同源分发**，同时提供 **jsDelivr** 镜像（二进制走 jsDelivr 真·CDN）：
+
+- `update-release-info.yml` 每小时从 app 仓库拉取最新 Release 的 APK，下载到本仓库 `apk/` 并提交；
+- 下载按钮优先使用 GitHub Pages 地址（`https://aasdqwe1.github.io/agent-toolbox-site/apk/agent-toolbox-latest.apk`，Fastly CDN，同源、免重定向）；
+- 页面另提供「APK CDN 镜像」按钮，指向 `https://cdn.jsdelivr.net/gh/Aasdqwe1/agent-toolbox-site@main/apk/agent-toolbox-latest.apk`（jsDelivr CDN）；
+- 两者均随每次 CI 构建自动更新；若镜像不可用，自动回退到 GitHub Releases 原链接。
+
+> 注意：APK 以二进制形式提交进仓库，`apk/` 目录会随新版本累积历史体积。若介意仓库体积，可改为使用 Cloudflare R2 / Backblaze B2 等对象存储 + CDN（需额外账号）。
 
 ## 目录结构
 

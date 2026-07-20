@@ -39,6 +39,7 @@ if ('IntersectionObserver' in window) {
     badge: document.getElementById('hero-badge'),
     btn: document.getElementById('dl-btn'),
     stableBtn: document.getElementById('dl-stable-btn'),
+    cdnBtn: document.getElementById('dl-cdn-btn'),
     title: document.getElementById('dl-title'),
     meta: document.getElementById('dl-meta'),
     version: document.getElementById('version-value'),
@@ -57,17 +58,23 @@ if ('IntersectionObserver' in window) {
       const stable = data && data.stable;
 
       if (ci) {
-        els.btn.href = ci.download_url;
+        // 优先使用 GitHub Pages（Fastly）同源 CDN，失败回退到 GitHub Releases 原链接
+        els.btn.href = ci.pages_url || ci.download_url;
         els.btn.setAttribute('download', ci.asset_name);
         els.title.textContent = '最新 CI 构建';
         const commit = ci.commit || '';
         els.meta.textContent = `${commit ? 'commit ' + commit + ' · ' : ''}${ci.size_mb} MB · ${fmtDate(ci.published_at)}`;
+        if (els.cdnBtn && ci.cdn_url) {
+          els.cdnBtn.href = ci.cdn_url;
+          els.cdnBtn.setAttribute('download', ci.asset_name);
+        }
       } else {
         throw new Error('no ci');
       }
 
       if (stable) {
-        els.stableBtn.href = stable.download_url;
+        els.stableBtn.href = stable.pages_url || stable.download_url;
+        els.stableBtn.setAttribute('download', stable.asset_name);
         els.stableBtn.textContent = `下载正式版 ${stable.tag}`;
         if (els.badge) els.badge.textContent = `Android MCP Server · ${stable.tag}`;
         if (els.version) els.version.textContent = stable.tag;
@@ -79,5 +86,6 @@ if ('IntersectionObserver' in window) {
       els.title.textContent = '最新构建版';
       els.meta.textContent = '点击前往 GitHub Releases 下载';
       if (els.stableBtn) els.stableBtn.href = FALLBACK;
+      if (els.cdnBtn) els.cdnBtn.href = FALLBACK;
     });
 })();
