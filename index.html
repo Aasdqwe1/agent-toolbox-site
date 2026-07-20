@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agent Toolbox · Android 端 MCP 服务端</title>
+  <meta name="description" content="Agent Toolbox —— 基于 Android 的 MCP（Model Context Protocol）服务端，内嵌 Python 3.14、Lua 引擎、内存修改引擎与静态 Git，通过 DeepSeek 网页版为 AI 提供本地工具调用能力。" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">
+        <span class="brand-logo">🛠️</span>
+        <span class="brand-name">Agent Toolbox</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">核心特性</a>
+        <a href="#tools">工具集</a>
+        <a href="#architecture">架构</a>
+        <a href="#start">快速开始</a>
+        <a href="#changelog">更新日志</a>
+      </nav>
+      <a class="btn btn-ghost nav-cta" href="https://github.com/Aasdqwe1/agent-toolbox" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="badge">Android MCP Server · v2.4.9</div>
+      <h1 class="hero-title">把一台 <span class="grad">MCP 服务端</span><br />装进你的安卓手机</h1>
+      <p class="hero-sub">
+        基于 JSON-RPC 2.0 协议的安卓端 MCP 服务端，内嵌 Python 3.14、Lua 引擎、内存修改引擎与静态 Git 二进制。
+        通过 DeepSeek 网页版集成，为 AI 提供真正的本地工具调用能力。
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#start">快速开始</a>
+        <a class="btn btn-ghost" href="https://github.com/Aasdqwe1/agent-toolbox" target="_blank" rel="noopener">查看源码</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">3</span><span class="stat-label">Git 回退层</span></div>
+        <div class="stat"><span class="stat-num">40+</span><span class="stat-label">内置工具</span></div>
+        <div class="stat"><span class="stat-num">3.14</span><span class="stat-label">内嵌 Python</span></div>
+        <div class="stat"><span class="stat-num">0</span><span class="stat-label">CDN 依赖</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心特性 -->
+  <section class="section" id="features">
+    <div class="section-head">
+      <h2 class="section-title">核心特性</h2>
+      <p class="section-desc">为移动端 AI 工具链而生的完整协议与服务能力</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-ico">🔌</div>
+        <h3>完整 MCP 协议</h3>
+        <p>严格遵循 JSON-RPC 2.0 over HTTP，内置 HTTP 服务器（支持 CORS），通过 JS Bridge + MutationObserver 自动监听工具调用。</p>
+      </div>
+      <div class="card">
+        <div class="card-ico">💬</div>
+        <h3>DeepSeek 集成</h3>
+        <p>DeepSeekChatBridge 单例跨 Activity 通信，每轮独立 requestId 并发管理；前端 500ms 轮询 + 120s 超时兜底，长对话不卡顿。</p>
+      </div>
+      <div class="card">
+        <div class="card-ico">🌊</div>
+        <h3>SSE 流式传输</h3>
+        <p>started / chunk / status / done / plan / error 全事件流，HandlerThread 专线写入，HTTP chunked 编码确保完整交付。</p>
+      </div>
+      <div class="card">
+        <div class="card-ico">🛡️</div>
+        <h3>上下文窗口哨兵</h3>
+        <p>检测 LLM 因上下文被压缩而输出自然语言或漏回 <code>id</code> 时，自动重发完整系统提示词并弹窗提示，可持续无上限恢复。</p>
+      </div>
+      <div class="card">
+        <div class="card-ico">🐍</div>
+        <h3>内嵌 Python 3.14</h3>
+        <p>JNI 嵌入 libpython3.14.so，无需 Termux。完整标准库 + asyncio/ssl/sqlite3，内置 ensurepip，可直接 pip 安装纯 Python 包。</p>
+      </div>
+      <div class="card">
+        <div class="card-ico">📦</div>
+        <h3>Git 三层回退</h3>
+        <p>内嵌 4.2MB 静态 git（0 依赖、含 HTTPS）→ 系统 git → dulwich 纯 Python 兜底，普通设备到 root 设备都能完整使用 Git。</p>
+      </div>
+      <div class="card">
+        <div class="card-ico">🧩</div>
+        <h3>Skill 热加载</h3>
+        <p>支持知识型 + 工具型 skill 包，放入目录后 <code>skills/reload</code> 即生效；skill 工具自动注册，知识按需渐进式披露。</p>
+      </div>
+      <div class="card">
+        <div class="card-ico">📱</div>
+        <h3>MT 管理器集成</h3>
+        <p>自动连接 MT 管理器 APK MCP，注册 18+ 个 <code>mt_apk_*</code> 工具：APK 分析、资源修改、Smali 编辑、重新打包。</p>
+      </div>
+      <div class="card">
+        <div class="card-ico">⚡</div>
+        <h3>多线程性能优化</h3>
+        <p>线程池管理 HTTP 连接，HandlerThread 专线处理 SSE 写入，提示词模板缓存 + 正则预编译，避免重复 I/O 与编译开销。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 工具集 -->
+  <section class="section section-alt" id="tools">
+    <div class="section-head">
+      <h2 class="section-title">工具集</h2>
+      <p class="section-desc">内置 40+ 工具，覆盖执行、文件、网络、内存修改等场景</p>
+    </div>
+
+    <div class="tool-group">
+      <h3 class="group-title">执行 & 文件</h3>
+      <div class="chips">
+        <span class="chip">python</span><span class="chip">shell</span><span class="chip">sh</span>
+        <span class="chip">cmd</span><span class="chip">file_read</span><span class="chip">file_write</span>
+        <span class="chip">file_list</span><span class="chip">file_search</span>
+      </div>
+    </div>
+    <div class="tool-group">
+      <h3 class="group-title">交互 & 网络</h3>
+      <div class="chips">
+        <span class="chip">ask</span><span class="chip">http_request</span><span class="chip">web</span>
+      </div>
+    </div>
+    <div class="tool-group">
+      <h3 class="group-title">计算 & 脚本</h3>
+      <div class="chips">
+        <span class="chip">math_calculator</span><span class="chip">lua（GameGuardian API）</span>
+      </div>
+    </div>
+    <div class="tool-group">
+      <h3 class="group-title">GM 内存修改引擎</h3>
+      <div class="chips">
+        <span class="chip">gm_root_status</span><span class="chip">gm_process_list</span>
+        <span class="chip">gm_attach_process</span><span class="chip">gm_memory_search</span>
+        <span class="chip">gm_memory_read</span><span class="chip">gm_memory_write</span>
+        <span class="chip">gm_memory_freeze</span><span class="chip">gm_aob_search</span>
+      </div>
+    </div>
+    <div class="tool-group">
+      <h3 class="group-title">Skill & MT 管理器</h3>
+      <div class="chips">
+        <span class="chip">skill_read</span><span class="chip">skills/list</span>
+        <span class="chip">skills/reload</span><span class="chip">mt_apk_*（运行态注册）</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 架构 -->
+  <section class="section" id="architecture">
+    <div class="section-head">
+      <h2 class="section-title">架构总览</h2>
+      <p class="section-desc">MCP 服务端 · SSE 流 · DeepSeek 桥接 · 计划任务</p>
+    </div>
+
+    <div class="arch">
+      <div class="arch-col">
+        <h4>协议接口</h4>
+        <ul class="arch-list">
+          <li><code>initialize</code> — 初始化连接</li>
+          <li><code>tools/list</code> — 获取全部工具</li>
+          <li><code>tools/call</code> — 调用指定工具</li>
+          <li><code>skills/list</code> — 已加载技能摘要</li>
+          <li><code>skills/reload</code> — 热加载技能目录</li>
+          <li><code>notifications/initialized</code></li>
+        </ul>
+      </div>
+      <div class="arch-col">
+        <h4>SSE 事件流</h4>
+        <ul class="arch-list">
+          <li><code>started</code> — 对话开始</li>
+          <li><code>chunk</code> — LLM 逐字输出</li>
+          <li><code>status</code> — 工具执行结果</li>
+          <li><code>done</code> — 一轮回复完成</li>
+          <li><code>plan</code> — 计划创建/更新/完成</li>
+          <li><code>context_compressed</code> — 哨兵事件</li>
+        </ul>
+      </div>
+      <div class="arch-col">
+        <h4>计划 / 任务执行</h4>
+        <ul class="arch-list">
+          <li>LLM 输出 <code>{"tasks":[...]}</code></li>
+          <li>PlanState 解析并创建任务</li>
+          <li>逐个执行 + <code>plan_update</code> 推进</li>
+          <li>依赖解析 / 优先级排序</li>
+          <li>失败重试（最多 3 次）</li>
+          <li>全部完成 → 自动生成总结</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flow">
+      <h4 class="flow-title">DeepSeek 桥接数据流</h4>
+      <div class="flow-track">
+        <div class="flow-node">MCP 前端<br /><small>test_client.html</small></div>
+        <div class="flow-arrow">▶</div>
+        <div class="flow-node">McpServer<br /><small>SSE 推送</small></div>
+        <div class="flow-arrow">▶</div>
+        <div class="flow-node">DeepSeekChatBridge<br /><small>并发回调管理</small></div>
+        <div class="flow-arrow">▶</div>
+        <div class="flow-node">DeepSeek 网页<br /><small>WebView + JS 注入</small></div>
+      </div>
+      <p class="flow-note">JS MutationObserver 每 500ms 轮询，文本稳定 1.5s 后触发完成；Java 端 120s 超时 + 30s DOM 兜底提取。</p>
+    </div>
+  </section>
+
+  <!-- 快速开始 -->
+  <section class="section section-alt" id="start">
+    <div class="section-head">
+      <h2 class="section-title">快速开始</h2>
+      <p class="section-desc">编译安装 → 启动服务 → 接入 AI</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-no">1</div>
+        <div class="step-body">
+          <h4>编译安装</h4>
+          <p>用 <strong>AIDE Pro</strong> 打开项目 → Build → Rebuild（先 Clean）；或用 Android Studio 执行 <code>./gradlew assembleDebug</code>。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-no">2</div>
+        <div class="step-body">
+          <h4>启动 MCP 服务</h4>
+          <p>打开应用 →「启动 MCP 服务」，记录局域网地址（如 <code>http://192.168.1.100:8080</code>），浏览器访问即可打开 MCP 工具箱。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-no">3</div>
+        <div class="step-body">
+          <h4>使用 DeepSeek 集成</h4>
+          <p>启动服务后点击「打开 DeepSeek 助手」并登录，对话中 AI 会自动调用本地工具。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-no">4</div>
+        <div class="step-body">
+          <h4>连接 MT 管理器</h4>
+          <p>在 MT 管理器中启动 APK MCP，返回工具箱后 LLM 即可调用 <code>mt_apk_*</code> 工具。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-no">5</div>
+        <div class="step-body">
+          <h4>安装技能</h4>
+          <p>将 <code>.md</code> 技能文件放入运行时目录后调 <code>skills/reload</code> 即可生效。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 更新日志 -->
+  <section class="section" id="changelog">
+    <div class="section-head">
+      <h2 class="section-title">版本信息 & 更新日志</h2>
+      <p class="section-desc">当前版本 v2.4.9</p>
+    </div>
+    <div class="meta-grid">
+      <div class="meta-item"><span>版本</span><strong>2.4.9</strong></div>
+      <div class="meta-item"><span>Python</span><strong>3.14.6（官方 Android aarch64）</strong></div>
+      <div class="meta-item"><span>Git</span><strong>2.46.0（静态编译，含 HTTPS）</strong></div>
+      <div class="meta-item"><span>协议</span><strong>MCP · JSON-RPC 2.0 over HTTP</strong></div>
+      <div class="meta-item"><span>最低 Android</span><strong>API 24（Android 7.0）</strong></div>
+      <div class="meta-item"><span>目标 SDK</span><strong>API 32（Android 12）</strong></div>
+      <div class="meta-item"><span>ABI</span><strong>arm64-v8a</strong></div>
+      <div class="meta-item"><span>前端渲染</span><strong>marked + KaTeX（本地，无 CDN）</strong></div>
+    </div>
+
+    <details class="log">
+      <summary>展开完整更新日志</summary>
+      <ul class="log-list">
+        <li><b>v2.4.9</b> — 修复 git clone DNS 解析失败（curl 启用 c-ares，新增 GIT_DNS_SERVERS）。</li>
+        <li><b>v2.4.8</b> — 修复 git clone HTTPS 失败（新增 git-remote-https helper 静态编译）。</li>
+        <li><b>v2.4.7</b> — 修复 Android 14+ TLS 段对齐报错（PT_TLS p_align 8→64）。</li>
+        <li><b>v2.4.6</b> — 复合 shell 命令中的 git 调用支持（注入 shell 函数）。</li>
+        <li><b>v2.4.5</b> — 修复 SELinux 导致 git 二进制不可执行（改以 jniLibs/libgit.so 打包）。</li>
+        <li><b>v2.4.4</b> — Python 工具内 subprocess 调用 git 支持。</li>
+        <li><b>v2.4.0</b> — Git 三层集成 + 静态二进制编译。</li>
+        <li><b>v2.3.0</b> — 前端对话流修复 + ask 工具体验优化。</li>
+        <li><b>v2.1.8</b> — SSE 流式传输修复 + 纯文本回复兼容。</li>
+        <li><b>v2.1.7</b> — 多线程优化 + 聊天桥接清理 + 可拖动悬浮按钮。</li>
+        <li><b>v2.1.0</b> — Skill 子系统 + MT 集成 + UI 翻新。</li>
+        <li><b>v2.0.0</b> — Python 3.14 内嵌重构（JNI 模式，无需 Termux）。</li>
+        <li><b>v1.0.0</b> — 初始版本：MCP 服务端 + DeepSeek 集成 + 4 个内置工具。</li>
+      </ul>
+    </details>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-logo">🛠️</span>
+        <span class="brand-name">Agent Toolbox</span>
+      </div>
+      <p class="footer-note">Android 端 MCP 服务端 · 为本地 AI 工具链而生</p>
+      <div class="footer-links">
+        <a href="https://github.com/Aasdqwe1/agent-toolbox" target="_blank" rel="noopener">源码仓库</a>
+        <a href="https://github.com/Aasdqwe1/agent-toolbox#readme" target="_blank" rel="noopener">完整文档</a>
+        <a href="#top">回到顶部</a>
+      </div>
+      <p class="footer-copy">© <span id="year"></span> Agent Toolbox · 基于 MIT 友好协议开源</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
