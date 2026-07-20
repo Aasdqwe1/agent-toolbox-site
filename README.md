@@ -47,6 +47,18 @@ python3 -m http.server 8080
 
 如需修改内容，直接编辑 `index.html` / `assets/` 后提交推送即可，GitHub Pages 会自动重新构建发布。
 
+## CDN 加速
+
+GitHub Pages 本身已托管在 Fastly 全球 CDN 上。若部分地区访问 GitHub 较慢，可使用 **jsDelivr** 镜像（同样是全球 CDN，且本站使用相对路径，整站可直接通过它访问，无需任何改造）：
+
+> https://cdn.jsdelivr.net/gh/Aasdqwe1/agent-toolbox-site@main/
+
+- 整站资源（HTML / CSS / JS / PNG / JSON）均由 jsDelivr 边缘节点分发；
+- `assets/release-info.json` 由 Actions 每小时更新，镜像侧最多延迟一个缓存周期；
+- 亦可在页面页脚点击「jsDelivr 镜像」一键切换。
+
+如需完全自定义域名 + 自有 CDN（如 Cloudflare），在仓库 Settings → Pages 添加自定义域名，并将 DNS 指向 Cloudflare 即可。
+
 ## 目录结构
 
 ```
@@ -54,7 +66,12 @@ agent-toolbox-site/
 ├── index.html
 ├── 404.html
 ├── README.md
+├── .github/
+│   ├── workflows/update-release-info.yml   # 每小时同步最新构建信息
+│   └── scripts/gen-release-info.py
 └── assets/
     ├── css/style.css
-    └── js/main.js
+    ├── js/main.js
+    ├── favicon.png
+    └── release-info.json                    # 最新构建元数据（自动生成）
 ```
