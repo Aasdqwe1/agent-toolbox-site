@@ -5,15 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Agent Toolbox · Android 端 MCP 服务端</title>
   <meta name="description" content="Agent Toolbox —— 基于 Android 的 MCP（Model Context Protocol）服务端，内嵌 Python 3.14、Lua 引擎、内存修改引擎与静态 Git，通过 DeepSeek 网页版为 AI 提供本地工具调用能力。" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234c8dff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 6a3.5 3.5 0 0 0-4.6 4.2L4 16.1 7.9 20l5.9-5.9A3.5 3.5 0 0 0 18 9.5l-2.5 2.5-2-2L16 7.5 14.5 6Z'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
+  <!-- 共享图标渐变定义 -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="ic" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#36d6e7" />
+        <stop offset="0.5" stop-color="#4c8dff" />
+        <stop offset="1" stop-color="#9b6cff" />
+      </linearGradient>
+    </defs>
+  </svg>
   <!-- 顶部导航 -->
   <header class="nav" id="nav">
     <div class="nav-inner">
       <a class="brand" href="#top">
-        <span class="brand-logo">🛠️</span>
+        <span class="brand-logo"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6a3.5 3.5 0 0 0-4.6 4.2L4 16.1 7.9 20l5.9-5.9A3.5 3.5 0 0 0 18 9.5l-2.5 2.5-2-2L16 7.5 14.5 6Z"/></svg></span>
         <span class="brand-name">Agent Toolbox</span>
       </a>
       <nav class="nav-links">
@@ -58,47 +68,47 @@
     </div>
     <div class="grid grid-3">
       <div class="card">
-        <div class="card-ico">🔌</div>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="12" r="2.4"/><path d="M8.2 7.3 15.8 11M8.2 16.7 15.8 13"/></svg></div>
         <h3>完整 MCP 协议</h3>
         <p>严格遵循 JSON-RPC 2.0 over HTTP，内置 HTTP 服务器（支持 CORS），通过 JS Bridge + MutationObserver 自动监听工具调用。</p>
       </div>
       <div class="card">
-        <div class="card-ico">💬</div>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-4 4V5Z"/></svg></div>
         <h3>DeepSeek 集成</h3>
         <p>DeepSeekChatBridge 单例跨 Activity 通信，每轮独立 requestId 并发管理；前端 500ms 轮询 + 120s 超时兜底，长对话不卡顿。</p>
       </div>
       <div class="card">
-        <div class="card-ico">🌊</div>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 13c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></div>
         <h3>SSE 流式传输</h3>
         <p>started / chunk / status / done / plan / error 全事件流，HandlerThread 专线写入，HTTP chunked 编码确保完整交付。</p>
       </div>
       <div class="card">
-        <div class="card-ico">🛡️</div>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg></div>
         <h3>上下文窗口哨兵</h3>
         <p>检测 LLM 因上下文被压缩而输出自然语言或漏回 <code>id</code> 时，自动重发完整系统提示词并弹窗提示，可持续无上限恢复。</p>
       </div>
       <div class="card">
-        <div class="card-ico">🐍</div>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l-3 4 3 4"/><path d="M15 7l3 4-3 4"/><path d="M13 4l-2 16"/></svg></div>
         <h3>内嵌 Python 3.14</h3>
         <p>JNI 嵌入 libpython3.14.so，无需 Termux。完整标准库 + asyncio/ssl/sqlite3，内置 ensurepip，可直接 pip 安装纯 Python 包。</p>
       </div>
       <div class="card">
-        <div class="card-ico">📦</div>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5Z"/><path d="M3 13l9 5 9-5"/><path d="M3 8l9 5 9-5"/></svg></div>
         <h3>Git 三层回退</h3>
         <p>内嵌 4.2MB 静态 git（0 依赖、含 HTTPS）→ 系统 git → dulwich 纯 Python 兜底，普通设备到 root 设备都能完整使用 Git。</p>
       </div>
       <div class="card">
-        <div class="card-ico">🧩</div>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6"/></svg></div>
         <h3>Skill 热加载</h3>
         <p>支持知识型 + 工具型 skill 包，放入目录后 <code>skills/reload</code> 即生效；skill 工具自动注册，知识按需渐进式披露。</p>
       </div>
       <div class="card">
-        <div class="card-ico">📱</div>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg></div>
         <h3>MT 管理器集成</h3>
         <p>自动连接 MT 管理器 APK MCP，注册 18+ 个 <code>mt_apk_*</code> 工具：APK 分析、资源修改、Smali 编辑、重新打包。</p>
       </div>
       <div class="card">
-        <div class="card-ico">⚡</div>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 5 13h6l-1 8 8-10h-6l1-8Z"/></svg></div>
         <h3>多线程性能优化</h3>
         <p>线程池管理 HTTP 连接，HandlerThread 专线处理 SSE 写入，提示词模板缓存 + 正则预编译，避免重复 I/O 与编译开销。</p>
       </div>
@@ -197,11 +207,11 @@
       <h4 class="flow-title">DeepSeek 桥接数据流</h4>
       <div class="flow-track">
         <div class="flow-node">MCP 前端<br /><small>test_client.html</small></div>
-        <div class="flow-arrow">▶</div>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
         <div class="flow-node">McpServer<br /><small>SSE 推送</small></div>
-        <div class="flow-arrow">▶</div>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
         <div class="flow-node">DeepSeekChatBridge<br /><small>并发回调管理</small></div>
-        <div class="flow-arrow">▶</div>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
         <div class="flow-node">DeepSeek 网页<br /><small>WebView + JS 注入</small></div>
       </div>
       <p class="flow-note">JS MutationObserver 每 500ms 轮询，文本稳定 1.5s 后触发完成；Java 端 120s 超时 + 30s DOM 兜底提取。</p>
@@ -294,7 +304,7 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <span class="brand-logo">🛠️</span>
+        <span class="brand-logo"><svg viewBox="0 0 24 24" fill="none" stroke="url(#ic)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6a3.5 3.5 0 0 0-4.6 4.2L4 16.1 7.9 20l5.9-5.9A3.5 3.5 0 0 0 18 9.5l-2.5 2.5-2-2L16 7.5 14.5 6Z"/></svg></span>
         <span class="brand-name">Agent Toolbox</span>
       </div>
       <p class="footer-note">Android 端 MCP 服务端 · 为本地 AI 工具链而生</p>

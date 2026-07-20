@@ -61,7 +61,8 @@ code {
   gap: 20px;
 }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; }
-.brand-logo { font-size: 1.35rem; }
+.brand-logo { display: inline-flex; }
+.brand-logo svg { width: 1.4rem; height: 1.4rem; display: block; }
 .brand-name { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .nav-links { display: flex; gap: 26px; margin-left: auto; }
 .nav-links a { color: var(--text-dim); font-size: 0.94rem; transition: color 0.2s; }
@@ -158,14 +159,14 @@ code {
   transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 .card:hover { transform: translateY(-4px); border-color: rgba(76, 141, 255, 0.6); box-shadow: var(--shadow); }
-.card-ico { font-size: 1.7rem; margin-bottom: 14px; }
+.card-ico { margin-bottom: 14px; }
+.card-ico svg { width: 2rem; height: 2rem; display: block; }
 .card h3 { font-size: 1.12rem; margin-bottom: 8px; }
 .card p { color: var(--text-dim); font-size: 0.94rem; }
 
 /* ===== 工具集 chips ===== */
 .tool-group { margin-bottom: 30px; }
-.group-title { font-size: 1.05rem; margin-bottom: 14px; color: var(--text); }
-.group-title::before { content: "▸ "; color: var(--cyan); }
+.group-title { font-size: 1.05rem; margin-bottom: 14px; color: var(--text); padding-left: 12px; border-left: 3px solid var(--blue); }
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip {
   padding: 7px 15px;
@@ -200,7 +201,7 @@ code {
   min-width: 130px;
 }
 .flow-node small { display: block; font-weight: 400; color: var(--text-faint); font-size: 0.74rem; margin-top: 3px; }
-.flow-arrow { color: var(--blue); font-size: 1.1rem; }
+.flow-arrow svg { width: 1.5rem; height: 1.5rem; display: block; }
 .flow-note { text-align: center; color: var(--text-faint); font-size: 0.86rem; margin-top: 20px; }
 
 /* ===== 步骤 ===== */
