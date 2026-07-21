@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-07-21T03:04:34Z",
+  "updated_at": "2026-07-21T05:05:03Z",
   "ci": {
     "tag": "latest",
     "asset_name": "agent-toolbox-latest-13143fc.apk",
     "size": 38107958,
     "size_mb": 36.3,
-    "published_at": "2026-07-19T19:21:34Z",
+    "published_at": "2026-07-21T04:08:24Z",
     "download_url": "https://github.com/Aasdqwe1/agent-toolbox/releases/download/latest/agent-toolbox-latest-13143fc.apk",
     "pages_url": "https://aasdqwe1.github.io/agent-toolbox-site/apk/agent-toolbox-latest.apk"
   },
