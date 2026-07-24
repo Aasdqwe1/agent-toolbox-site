@@ -20,6 +20,11 @@ jobs:
           curl -sL --fail \
             "https://api.github.com/repos/Aasdqwe1/agent-toolbox/releases?per_page=30" \
             -o /tmp/releases.json
+      - name: Fetch kotlin releases
+        run: |
+          curl -sL --fail \
+            "https://api.github.com/repos/Aasdqwe1/agent-toolbox-kotlin/releases?per_page=10" \
+            -o /tmp/kotlin-releases.json
 
       - name: Generate release-info.json
         env:

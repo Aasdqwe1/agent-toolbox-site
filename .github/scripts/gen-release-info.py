@@ -6,8 +6,10 @@ import datetime as dt
 import subprocess
 
 REPO = 'Aasdqwe1/agent-toolbox'
+KOTLIN_REPO = 'Aasdqwe1/agent-toolbox-kotlin'
 PAGES_BASE = 'https://aasdqwe1.github.io/agent-toolbox-site'
 INPUT = '/tmp/releases.json'
+KOTLIN_INPUT = '/tmp/kotlin-releases.json'
 OUTPUT = 'assets/release-info.json'
 APK_DIR = 'apk'
 TOKEN = os.environ.get('GITHUB_TOKEN', '')
@@ -38,6 +40,20 @@ ci = next((r for r in releases if r.get('tag_name') == 'latest' and not r.get('d
 stable_candidates = [r for r in releases if not r.get('draft') and not r.get('prerelease')]
 stable = sorted(stable_candidates, key=lambda x: x['published_at'], reverse=True)[0] if stable_candidates else None
 
+# Kotlin CI build (from agent-toolbox-kotlin repo)
+kotlin = None
+try:
+    with open(KOTLIN_INPUT, encoding='utf-8') as f:
+        kotlin_releases = json.load(f)
+    krel = next((r for r in kotlin_releases if r.get('tag_name') == 'kotlin-latest-build' and not r.get('draft')), None)
+    if krel:
+        kotlin = asset_info(krel, 'agent-toolbox-kotlin-latest.apk')
+        m = re.search(r'latest-([a-f0-9]{7,})', kotlin.get('asset_name', ''))
+        if m:
+            kotlin['commit'] = m.group(1)
+except Exception as e:
+    print('kotlin release parse error:', e)
+
 
 def asset_info(release, apk_name):
     assets = release.get('assets') or []
@@ -63,6 +79,7 @@ out = {
     'updated_at': dt.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
     'ci': ci_info,
     'stable': stable_info,
+    'kotlin': kotlin,
 }
 with open(OUTPUT, 'w', encoding='utf-8') as f:
     json.dump(out, f, ensure_ascii=False, indent=2)
@@ -85,5 +102,7 @@ if stable_info:
 print('updated_at:', out['updated_at'])
 if ci_info:
     print('ci:', ci_info['tag'], ci_info['size_mb'], 'MB')
+if kotlin:
+    print('kotlin:', kotlin['tag'], kotlin['size_mb'], 'MB')
 if stable_info:
     print('stable:', stable_info['tag'], stable_info['size_mb'], 'MB')
