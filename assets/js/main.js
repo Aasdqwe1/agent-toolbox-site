@@ -44,9 +44,6 @@ if ('IntersectionObserver' in window) {
     meta: document.getElementById('dl-meta'),
     version: document.getElementById('version-value'),
     changelogDesc: document.getElementById('changelog-desc'),
-    kbtn: document.getElementById('kotlin-dl-btn'),
-    ktitle: document.getElementById('kotlin-dl-title'),
-    kmeta: document.getElementById('kotlin-dl-meta'),
   };
   if (!els.btn) return;
 
@@ -84,14 +81,6 @@ if ('IntersectionObserver' in window) {
         if (els.changelogDesc) els.changelogDesc.textContent = `当前版本 ${stable.tag}`;
       }
 
-      // Kotlin CI build
-      const kotlin = data && data.kotlin;
-      if (kotlin && els.kbtn) {
-        els.kbtn.href = kotlin.pages_url || kotlin.download_url;
-        els.kbtn.setAttribute('download', kotlin.asset_name || '');
-        if (els.ktitle) els.ktitle.textContent = 'Kotlin 最新构建';
-        if (els.kmeta) els.kmeta.textContent = `${kotlin.size_mb || '?'} MB · ${fmtDate(kotlin.published_at)}`;
-      }
     })
     .catch(() => {
       els.btn.href = FALLBACK;
