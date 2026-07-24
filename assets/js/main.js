@@ -81,7 +81,7 @@ if ('IntersectionObserver' in window) {
         els.kbtn.href = kotlin.download_url || els.kbtn.href;
         els.kbtn.setAttribute('download', kotlin.asset_name || '');
         if (els.ktitle) els.ktitle.textContent = 'Kotlin 最新构建';
-        if (els.kmeta) els.kmeta.textContent = (kotlin.size_mb || '?') + ' MB · ' + fmtDate(kotlin.published_at);
+        if (els.kmeta) els.kmeta.textContent = (kotlin.size_mb ?? '?') + ' MB · ' + fmtDate(kotlin.published_at);
       }
 
       if (stable) {

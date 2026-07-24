@@ -52,7 +52,19 @@ try:
         if m:
             kotlin['commit'] = m.group(1)
 except Exception as e:
-    print('kotlin release parse error:', e)
+    print('kotlin release (kotlin-repo) parse error:', e)
+
+# Fallback: kotlin-latest-build might be on the main repo (agent-toolbox)
+if not kotlin:
+    try:
+        krel = next((r for r in releases if r.get('tag_name') == 'kotlin-latest-build' and not r.get('draft')), None)
+        if krel:
+            kotlin = asset_info(krel, 'agent-toolbox-kotlin-latest.apk')
+            m = re.search(r'latest-([a-f0-9]{7,})', kotlin.get('asset_name', ''))
+            if m:
+                kotlin['commit'] = m.group(1)
+    except Exception as e:
+        print('kotlin release (main-repo fallback) error:', e)
 
 
 def asset_info(release, apk_name):
