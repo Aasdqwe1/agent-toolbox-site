@@ -17,5 +17,13 @@
     "published_at": "2026-07-17T19:17:25Z",
     "download_url": "https://github.com/Aasdqwe1/agent-toolbox/releases/download/v2.4.36/agent-toolbox-v2.4.36.apk",
     "pages_url": "https://aasdqwe1.github.io/agent-toolbox-site/apk/agent-toolbox-stable.apk"
+  },
+  "kotlin": {
+    "tag": "kotlin-latest-build",
+    "asset_name": "app-debug.apk",
+    "size": 0,
+    "size_mb": "?",
+    "published_at": "2026-07-24T00:00:00Z",
+    "download_url": "https://github.com/Aasdqwe1/agent-toolbox/releases/download/kotlin-latest-build/app-debug.apk"
   }
 }
