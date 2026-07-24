@@ -43,6 +43,9 @@ if ('IntersectionObserver' in window) {
     title: document.getElementById('dl-title'),
     meta: document.getElementById('dl-meta'),
     version: document.getElementById('version-value'),
+    kbtn: document.getElementById('kotlin-dl-btn'),
+    ktitle: document.getElementById('kotlin-dl-title'),
+    kmeta: document.getElementById('kotlin-dl-meta'),
     changelogDesc: document.getElementById('changelog-desc'),
   };
   if (!els.btn) return;
@@ -70,6 +73,15 @@ if ('IntersectionObserver' in window) {
         }
       } else {
         throw new Error('no ci');
+      }
+
+      // Kotlin CI build
+      const kotlin = data && data.kotlin;
+      if (kotlin && els.kbtn) {
+        els.kbtn.href = kotlin.download_url || els.kbtn.href;
+        els.kbtn.setAttribute('download', kotlin.asset_name || '');
+        if (els.ktitle) els.ktitle.textContent = 'Kotlin 最新构建';
+        if (els.kmeta) els.kmeta.textContent = (kotlin.size_mb || '?') + ' MB · ' + fmtDate(kotlin.published_at);
       }
 
       if (stable) {
